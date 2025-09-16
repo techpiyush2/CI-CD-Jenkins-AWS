@@ -24,7 +24,7 @@ const Contact = () => {
 					I'm always open to exploring new opportunities within web
 					development. Whether you have a potential job offer or
 					simply want to connect, I'd love to hear from you. Feel free
-					to reach out using the button below.
+					to reach out using the button bew.
 				</p>
 				<motion.div
 					initial={{ rotate: 0, y: 0 }}
