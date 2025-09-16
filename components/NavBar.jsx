@@ -99,7 +99,7 @@ const Navbar = () => {
 						href="mailto:lukecoleman123@gmail.com"
 						className="py-2 px-6 bg-luke-green hover:bg-luke-hover transition-colors duration-300 text-white font-bold rounded-3xl shadow cursor-pointer"
 					>
-						Contact Me
+						Contact Memmmm
 					</Link>
 				</motion.div>
 			</div>
