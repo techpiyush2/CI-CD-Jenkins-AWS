@@ -52,7 +52,7 @@ const Clients = () => {
 			<div className="container mx-auto rounded-xl  py-20 relative">
 				<div className="flex flex-col items-center relative z-10">
 					<h2 className="text-4xl md:text-5xl font-bold mb-10 text-center text-white">
-						Clients Worked With
+						Clients Worked With Piyush
 					</h2>
 					<div className="w-full max-w-4xl px-10">
 						<Slider {...settings}>
