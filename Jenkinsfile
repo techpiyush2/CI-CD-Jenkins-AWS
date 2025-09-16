@@ -1,36 +1,49 @@
-node {
-    def appDir = '/var/www/nextjs-app'
-
-    stage('Clean Workspace') {
-        deleteDir()
+pipeline {
+    agent any
+    environment {
+        APP_DIR = "/var/www/nextjs-app"
     }
 
-    stage('Clone Repo') {
-        echo 'Cloning the repo'
-        git(
-            branch: 'main',
-            url: 'https://github.com/techpiyush2/CI-CD-Jenkins-AWS'
-        )
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+
+        stage('Clone Repo') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/techpiyush2/CI-CD-Jenkins-AWS'
+            }
+        }
+
+        stage('Deploy to EC2') {
+            steps {
+                sh """
+                    sudo mkdir -p ${APP_DIR}
+                    sudo chown -R jenkins:jenkins ${APP_DIR}
+
+                    rsync -av --delete --exclude='.git' --exclude='node_modules' ./ ${APP_DIR}/
+
+                    cd ${APP_DIR}
+                    npm install
+                    npm run build
+
+                    sudo fuser -k 3000/tcp || true
+
+                    nohup npm run start > app.log 2>&1 &
+                """
+            }
+        }
     }
 
-    stage('Deploy to EC2') {
-        echo 'Deploying to EC2'
-        sh """
-            sudo mkdir -p ${appDir}
-            sudo chown -R jenkins:jenkins ${appDir}
-
-            # Copy files to EC2 directory
-            rsync -av --delete --exclude='.git' --exclude='node_modules' ./ ${appDir}/
-
-            cd ${appDir}
-            npm install
-            npm run build
-
-            # Kill existing process on port 3000 if running
-            sudo fuser -k 3000/tcp || true
-
-            # Start Next.js in the background using nohup
-            nohup npm run start > app.log 2>&1 &
-        """
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
+        }
     }
 }
