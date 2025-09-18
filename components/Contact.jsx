@@ -21,7 +21,7 @@ const Contact = () => {
 					Contact Me
 				</h2>
 				<p className="w-[80%] text-center mx-auto mb-10">
-					I'm always open to exploring new opportunities within web
+					I am always open to exploring new opportunities within web
 					development. Whether you have a potential job offer or
 					simply want to connect, I'd love to hear from you. Feel free
 					to reach out using the button bew.
